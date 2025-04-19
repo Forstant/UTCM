@@ -1,0 +1,49 @@
+### model
+model_name_or_path: google/gemma-2-9b-it
+flash_attn: fa2
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+# lora_target: q_proj,v_proj
+lora_target: all
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+# deepspeed: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/configs/ds/ds_z3_config.json
+seed: 123
+pissa_init: true
+
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/sft
+dataset: all_sft_data
+template: gemma
+cutoff_len: 2048
+max_samples: 20000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/gemma-2-9b-it/sft/12-10-09-01-23_5.0e-5_0.25
+logging_steps: 10
+save_steps: 20000
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 5.0e-5
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.25
+bf16: true
+ddp_timeout: 180000000
+
+### eval
+val_size: 0.1
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 1000
