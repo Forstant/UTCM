@@ -1,0 +1,27 @@
+### model
+model_name_or_path: outputs/saves/Mistral-7B-Instruct-v0.3/full_pt/12-12-00-25-19_5.0e-5_0.05
+flash_attn: fa2
+
+### method
+stage: sft
+do_predict: true
+finetuning_type: full
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/sft
+eval_dataset: sft_test_data
+template: mistral
+cutoff_len: 1024
+max_samples: 1000
+# max_samples: 100
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/Mistral-7B-Instruct-v0.3/predict/12-12-00-24-20_5.0e-5_0.2
+overwrite_output_dir: true
+
+### eval
+per_device_eval_batch_size: 8
+predict_with_generate: true
+ddp_timeout: 180000000

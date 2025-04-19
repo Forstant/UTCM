@@ -1,0 +1,33 @@
+# 0228 直接使用基座模型来测试广安门数据
+
+# yaml文件需要修改的信息如下：
+# 1. 指定：“原始模型的路径” ;
+# 2. 指定：“输出文件夹的路径”;
+
+
+### model
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+flash_attn: fa2
+
+### method
+stage: sft
+do_predict: true
+finetuning_type: lora
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/sft
+eval_dataset: GAM_sft_test_data
+template: qwen
+cutoff_len: 1024
+max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/Qwen2.5-7B-Instruct/predict
+overwrite_output_dir: true
+
+### eval
+per_device_eval_batch_size: 8
+predict_with_generate: true
+ddp_timeout: 180000000

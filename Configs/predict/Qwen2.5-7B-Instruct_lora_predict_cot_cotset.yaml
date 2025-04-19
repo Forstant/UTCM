@@ -1,0 +1,28 @@
+### model
+model_name_or_path: outputs/saves/Qwen2.5-7B-Instruct/full_pt/cht_1.0e-5_0.15_12-26-07-44-14
+adapter_name_or_path: outputs/saves/Qwen2.5-7B-Instruct/sft/12-09-01-53-42_4.0e-5_0.3
+flash_attn: fa2
+
+### method
+stage: sft
+do_predict: true
+finetuning_type: lora
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/sft
+# eval_dataset: sft_data_Alpaca_task_1.json, sft_data_Alpaca_task_2.json, sft_data_Alpaca_task_3.json, sft_data_Alpaca_task_4.json, sft_data_Alpaca_task_5.json, sft_data_Alpaca_task_6.json 
+eval_dataset: test_cot_data
+template: qwen
+cutoff_len: 2048
+max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/Qwen2.5-7B-Instruct/predict_sft/12-09-01-53-42_4.0e-5_0.3
+overwrite_output_dir: true
+
+### eval
+per_device_eval_batch_size: 8
+predict_with_generate: true
+ddp_timeout: 180000000
