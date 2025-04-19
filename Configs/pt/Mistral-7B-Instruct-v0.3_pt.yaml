@@ -1,0 +1,48 @@
+### model
+model_name_or_path: mistralai/Mistral-7B-Instruct-v0.3 
+flash_attn: fa2
+### method
+stage: pt
+do_train: true
+finetuning_type: full
+# mixture_of_depths: convert
+# deepspeed: ds/ds_z0_config.json
+seed: 123
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/pt
+dataset: hangu_pt_data
+template: mistral
+cutoff_len: 1024
+max_samples: 100000
+# max_samples: 5120
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/Mistral-7B-Instruct-v0.3/full_pt/12-12-00-24-59_5.0e-5_0.1
+logging_steps: 1000
+# logging_steps: 10
+save_steps: 50000
+# save_steps: 5120
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+optim: adamw_8bit
+# optim: adamw_8bit
+learning_rate: 5.0e-5
+num_train_epochs: 5.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.25
+pure_bf16: true
+ddp_timeout: 180000000
+
+### eval
+val_size: 0.1
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 50000
+# eval_steps: 1024

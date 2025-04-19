@@ -1,0 +1,45 @@
+### model
+model_name_or_path: Qwen/Qwen2.5-7B-Instruct
+flash_attn: fa2
+
+### method
+stage: pt
+do_train: true
+finetuning_type: full
+# deepspeed: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/configs/ds/ds_z3_config.json
+seed: 123
+
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/pt
+dataset: hangu_pt_data
+# eval_dataset: sft_test_data
+template: qwen
+cutoff_len: 1024
+max_samples: 100000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/Qwen2.5-7B-Instruct/full_pt/12-16-06-37-33_5.0e-5_0.3
+logging_steps: 100
+save_steps: 100000
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8  #task3
+optim: paged_adamw_8bit 
+learning_rate: 5.0e-5
+num_train_epochs: 3.0  #task2
+lr_scheduler_type: cosine
+warmup_ratio: 0.3
+ddp_timeout: 180000000 
+bf16: true
+
+### eval
+val_size: 0.1
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 500

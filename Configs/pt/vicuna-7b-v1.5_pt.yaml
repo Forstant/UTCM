@@ -1,0 +1,45 @@
+### model
+model_name_or_path: lmsys/vicuna-7b-v1.5
+
+### method
+stage: pt
+do_train: true
+finetuning_type: full
+# mixture_of_depths: convert
+# deepspeed: ds/ds_z0_config.json
+seed: 123
+
+### dataset
+dataset_dir: /GLOBALFS/sysu_wangp_1/AITCM/AITCM/datasets/pt
+dataset: hangu_pt_data
+# eval_dataset: eval_data
+template: llama2
+cutoff_len: 1024
+max_samples: 100000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: outputs/saves/vicuna-7b-v1.5/full_pt/12-12-09-43-56
+logging_steps: 100
+save_steps: 50000
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+optim: paged_adamw_8bit
+# optim: adamw_8bit
+learning_rate: 5.0e-5
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.2
+pure_bf16: true
+ddp_timeout: 180000000
+
+### eval
+val_size: 0.1
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 500
